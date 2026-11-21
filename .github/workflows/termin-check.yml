@@ -2,7 +2,7 @@ name: Termin-Check Führerscheinstelle
 
 on:
   schedule:
-    - cron: "7,37 * * * *"
+    - cron: "7,37 4-11 * * *"
   workflow_dispatch: {}
 
 permissions:
@@ -13,7 +13,24 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  zeitfenster:
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.window.outputs.run }}
+    steps:
+      - id: window
+        run: |
+          H=$(TZ=Europe/Berlin date +%-H)
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || { [ "$H" -ge 6 ] && [ "$H" -lt 12 ]; }; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "Außerhalb von 06-12 Uhr (jetzt $H Uhr) - übersprungen"
+          fi
+
   check:
+    needs: zeitfenster
+    if: needs.zeitfenster.outputs.run == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
