@@ -38,7 +38,7 @@ DEBUG_DIR = HERE / "debug"
 TZ = ZoneInfo("Europe/Berlin")
 
 INITIAL_MAILS = 4
-STATUS_HOURS = (8, 18)          # Status-Mails ab 08:00 und ab 18:00 Uhr
+STATUS_HOURS = (6, 11)          # Status-Mails ab 08:00 und ab 18:00 Uhr
 ERROR_MAIL_INTERVAL_H = 6
 
 NONE, AVAILABLE, UNKNOWN, ERROR = "KEINE", "VERFUEGBAR", "UNKLAR", "FEHLER"
@@ -140,7 +140,7 @@ def build_mail(result: str, detail: str, now: dt.datetime, reason: str) -> tuple
     steps = (f"So kommst du hin:\n  1. {URL} öffnen\n  2. „{CATEGORY}“ anklicken\n"
              f"  3. „{SERVICE}“ anhaken\n  4. „Weiter“\n")
     if result == AVAILABLE:
-        subject = "TERMINE VERFÜGBAR – sofort handeln! (Führerscheinstelle Stuttgart)"
+        subject = f"Achtung Termine verfügbar - {now:%d.%m.%Y, %H:%M} Uhr - Termincheck Führerscheinstelle"
         body = (f"Termine verfügbar, sofort handeln!\n\nGeprüft: {stamp}\n{detail}\n\n"
                 f"Link: {URL}\n\n{steps}")
     elif result == UNKNOWN:
