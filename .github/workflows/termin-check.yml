@@ -61,8 +61,12 @@ jobs:
         run: |
           git config user.name "termin-check-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp state.json /tmp/state.json
+          git fetch origin main
+          git reset --hard origin/main
+          cp /tmp/state.json state.json
           git add state.json
-          git diff --cached --quiet || (git commit -m "Zustand aktualisiert" && git pull --rebase && git push)
+          git diff --cached --quiet || (git commit -m "Zustand aktualisiert" && git push origin HEAD:main)
 
       - name: Screenshots hochladen
         if: always()
