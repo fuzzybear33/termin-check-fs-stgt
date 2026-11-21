@@ -1,8 +1,8 @@
 {
-  "checks": 0,
-  "initial_mails_sent": 0,
-  "last_status_slot": "",
+  "checks": 1,
+  "initial_mails_sent": 1,
+  "last_status_slot": "2026-11-21-08",
   "last_error_mail": "",
-  "last_result": "",
-  "last_check": ""
+  "last_result": "KEINE",
+  "last_check": "2026-11-21T15:20:36+01:00"
 }
